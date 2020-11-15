@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 ping blackmesaeast.local -w1 -t1 &>/dev/null 
 if [ $? -ne 0 ]; then 
   echo "cannot reach blackmesaeast.local" && exit 1
@@ -16,4 +15,5 @@ echo -n "restic password:"
 read -s pw
 declare -x RESTIC_PASSWORD="$pw"
 sudo -E restic backup / -r /mnt/$(id -un)/$(hostname)/restic/ -x --cleanup-cache --exclude "*Media*"
+sudo -E restic snapshots -r /mnt/$(id -un)/$(hostname)/restic/
 sudo umount /mnt
