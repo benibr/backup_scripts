@@ -26,5 +26,6 @@ fi
 
 sudo -E restic backup ${FILESYSTEMS?} -x --cleanup-cache --exclude-file /home/${USER}/.config/backup/excludes
 sudo -E restic snapshots
+sudo -E restic forget --keep-daily=7 --keep-weekly=4 --keep-monthly=6 --keep-yearly 2 --prune
 
 sudo umount /mnt
