@@ -17,11 +17,13 @@ sudo true && echo "sudo accuired" || exit 1
 if [[ -n "${MOUNT_SMB}" ]]; then
   trap 'sudo umount /mnt; exit 2' KILL TERM INT
   sudo mount.cifs ${MOUNT_SMB} /mnt/ -o user="${USER}" || exit 1
-  [[ -z "${RESTIC_PASSWORD}" ]] && \
-    echo -n "restic password:" && \
-    read -s pw && \
-    declare -x RESTIC_PASSWORD="$pw"
-    declare -x RESTIC_REPOSITORY="/mnt/${USER}/$(hostname)/restic/"
+  declare -x RESTIC_REPOSITORY="/mnt/${USER}/$(hostname)/restic/"
+fi
+
+if [[ -z "${RESTIC_PASSWORD}" ]]; then
+  echo -n "restic password:"
+  read -s pw
+  declare -x RESTIC_PASSWORD="$pw"
 fi
 
 sudo -E restic backup ${FILESYSTEMS?} -x --cleanup-cache --exclude-file /home/${USER}/.config/backup/excludes
