@@ -1,6 +1,7 @@
 #!/bin/bash
 
 USER="$(id -un)"
+REMOTE_USER=$USER
 
 source /home/$USER/.config/backup/environment
 
@@ -16,8 +17,8 @@ sudo true && echo "sudo accuired" || exit 1
 
 if [[ -n "${MOUNT_SMB}" ]]; then
   trap 'sudo umount /mnt; exit 2' KILL TERM INT
-  sudo mount.cifs ${MOUNT_SMB} /mnt/ -o user="${USER}" || exit 1
-  declare -x RESTIC_REPOSITORY="/mnt/${USER}/$(hostname)/restic/"
+  sudo mount.cifs ${MOUNT_SMB} /mnt/ -o user="${REMOTE_USER}" || exit 1
+  declare -x RESTIC_REPOSITORY="/mnt/${REMOTE_USER}/$(hostname)/restic/"
 fi
 
 if [[ -z "${RESTIC_PASSWORD}" ]]; then
