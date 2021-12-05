@@ -27,6 +27,10 @@ declare -x B2_ACCOUNT_ID
 declare -x B2_ACCOUNT_KEY
 declare -x RESTIC_REPOSITORY
 
-sudo -E restic backup -r $RESTIC_REPOSITORY ${FILESYSTEMS?} -x --cleanup-cache --exclude-file /home/${USER}/.config/backup/excludes
+if [ $EXCLUDES_FILE ]; then
+  ARGS+=" --exclude-file $EXCLUDES_FILE"
+fi
+
+sudo -E restic backup -r $RESTIC_REPOSITORY ${FILESYSTEMS?} -x --cleanup-cache $ARGS
 sudo -E restic snapshots
 sudo -E restic forget --keep-daily=7 --keep-weekly=4 --keep-monthly=6 --keep-yearly 2 --prune
