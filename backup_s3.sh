@@ -2,7 +2,9 @@
 
 USER="$(id -un)"
 
-source /home/$USER/.config/backup/environment
+source /home/$USER/.config/backup/environment 2>/dev/null \
+  || source /root/.config/backup/environment 2>/dev/null \
+  || ( echo "Error no config environment found" && exit 1 )
 
 if [[ -n "${PING_TEST}" ]]; then
   ping ${PING_TEST} -w1 -t1 &>/dev/null 
