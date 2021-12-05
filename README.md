@@ -19,17 +19,19 @@ tmp/
 ## backup_s3.sh
 meant so safe data on s3 bucket
 
-First create a backup eg. `backup` with user and password.
+create a bucket and create a config
 
 ```/home/$USER/.config/backup/environment:
 PING_TEST=de.remote.foo #optional
 FILESYSTEMS="/ /home"
 
-RESTIC_REPOSITORY="s3:https://s3.example/restic-demo"
-AWS_ACCESS_KEY_ID="LAIUDSAJSGDV"
-AWS_SECRET_ACCESS_KEY="DSAFUZAANCXNBIAFEUIASUFAK"
+RESTIC_REPOSITORY="b2:bucket"
+B2_ACCOUNT_ID="LAIUDSAJSGDV"
+B2_ACCOUNT_KEY="DSAFUZAANCXNBIAFEUIASUFAK"
 RESTIC_PASSWORD="foobar"
 ```
+
+source the file and init the repo, afterwards just run the script
 
 ```/home/${USER}/.config/backup/excludes
 tmp/
