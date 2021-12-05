@@ -23,8 +23,8 @@ if [[ -z "${RESTIC_PASSWORD}" ]]; then
 fi
 
 declare -x RESTIC_PASSWORD
-declare -x AWS_ACCESS_KEY_ID
-declare -x AWS_SECRET_ACCESS_KEY
+declare -x B2_ACCOUNT_ID
+declare -x B2_ACCOUNT_KEY
 declare -x RESTIC_REPOSITORY
 
 sudo -E restic backup -r $RESTIC_REPOSITORY ${FILESYSTEMS?} -x --cleanup-cache --exclude-file /home/${USER}/.config/backup/excludes
