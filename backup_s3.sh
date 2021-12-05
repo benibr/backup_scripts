@@ -13,8 +13,7 @@ if [[ -n "${PING_TEST}" ]]; then
   fi
 fi
 
-echo "sudo required. Enter password if nessesary"
-sudo true && echo "sudo accuired" || exit 1
+sudo true || echo "cannot accuire sudo" && exit 1
 
 if [[ -z "${RESTIC_PASSWORD}" ]]; then
   echo -n "restic password:"
@@ -31,6 +30,6 @@ if [ $EXCLUDES_FILE ]; then
   ARGS+=" --exclude-file $EXCLUDES_FILE"
 fi
 
-sudo -E restic backup -r $RESTIC_REPOSITORY ${FILESYSTEMS?} -x --cleanup-cache $ARGS
-sudo -E restic snapshots
-sudo -E restic forget --keep-daily=7 --keep-weekly=4 --keep-monthly=6 --keep-yearly 2 --prune
+sudo -E restic -q backup -r $RESTIC_REPOSITORY ${FILESYSTEMS?} -x --cleanup-cache $ARGS
+sudo -E restic -q snapshots
+sudo -E restic -q forget --keep-daily=7 --keep-weekly=4 --keep-monthly=6 --keep-yearly 2 --prune
