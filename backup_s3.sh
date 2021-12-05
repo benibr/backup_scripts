@@ -30,6 +30,6 @@ if [ $EXCLUDES_FILE ]; then
   ARGS+=" --exclude-file $EXCLUDES_FILE"
 fi
 
-sudo -E restic -q backup -r $RESTIC_REPOSITORY ${FILESYSTEMS?} -x --cleanup-cache $ARGS
+sudo -E restic -q -o b2.connections=50 backup -r $RESTIC_REPOSITORY ${FILESYSTEMS?} -x --cleanup-cache $ARGS
 sudo -E restic -q snapshots
 sudo -E restic -q forget --keep-daily=7 --keep-weekly=4 --keep-monthly=6 --keep-yearly 2 --prune
