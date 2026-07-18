@@ -1,7 +1,9 @@
 #!/bin/bash
 
 USER="$(id -un)"
-REMOTE_USER=$USER
+if [ -z "$REMOTE_USER" ]; then
+  REMOTE_USER=$USER
+fi
 
 source /home/$USER/.config/backup/environment 2>/dev/null \
   || source /root/.config/backup/environment 2>/dev/null \
